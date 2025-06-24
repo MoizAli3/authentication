@@ -1,9 +1,7 @@
 import express from "express";
+import { handleGetUsers } from "../../controller/user/loginUser.js";
 
 const loginRoute = express.Router();
 
-loginRoute.get("/", (req, res) => {
-  res.send("Hello from the login");
-});
-
+loginRoute.get("/", handleGetUsers);
 export default loginRoute;

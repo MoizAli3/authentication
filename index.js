@@ -4,6 +4,7 @@ import connectMongoDb from "./connect.js";
 import "dotenv/config";
 
 const app = express();
+app.use(express.json());
 const port = process.env.PORT || 3000;
 connectMongoDb(process.env.DATABASE_URI);
 
