@@ -5,47 +5,42 @@ import { Link } from "react-router";
 import Swal from "sweetalert2";
 
 function SignUp() {
-  const handleCreateUser = async ({ username, email, password, phone }) => {
-   await axios
-      .post("https://credentials-backend-jfce.onrender.com/v1/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-          phone,
-        }),
-      })
-      .then(function (response) {
-        Swal.fire({
-          title: "Congratulations !",
-          text: "You Created a Account!",
-          icon: "success",
-        });
-        console.log(response);
-      })
-      .catch(function (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-          footer: '<a href="#">Why do I have this issue?</a>',
-        });
-        console.log(error);
-      });
-  };
-
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
+
+  const handleCreateUser = async ({ username, email, password, phone }) => {
+    try {
+      const response = await axios.post(
+        "https://credentials-backend-jfce.onrender.com/v1/signup",
+        { username, email, password, phone },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      Swal.fire({
+        title: "Congratulations!",
+        text: "You created an account!",
+        icon: "success",
+      });
+      console.log(response);
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong!";
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: errorMessage,
+        footer: '<a href="#">Why do I have this issue?</a>',
+      });
+      console.error("Error:", error.response?.data || error.message);
+    }
+  };
 
   const onSubmit = (data) => handleCreateUser(data);
 
@@ -63,12 +58,11 @@ function SignUp() {
             </h1>
             <form
               className="space-y-4 md:space-y-2.5"
-              action="#"
               onSubmit={handleSubmit(onSubmit)}
             >
               <div>
                 <label
-                  htmlFor="email"
+                  htmlFor="username"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Username
@@ -79,9 +73,15 @@ function SignUp() {
                   id="username"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="alexcarry"
-                  required=""
-                  {...register("username", { required: true })}
+                  {...register("username", {
+                    required: "Username is required",
+                  })}
                 />
+                {errors.username && (
+                  <p className="text-red-500 text-sm">
+                    {errors.username.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label
@@ -96,9 +96,11 @@ function SignUp() {
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
-                  required=""
-                  {...register("email", { required: true })}
+                  {...register("email", { required: "Email is required" })}
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email.message}</p>
+                )}
               </div>
               <div>
                 <label
@@ -113,21 +115,27 @@ function SignUp() {
                   id="password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required=""
-                  {...register("password", { required: true })}
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
                 />
+                {errors.password && (
+                  <p className="text-red-500 text-sm">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label
-                  htmlFor="confirm-password"
+                  htmlFor="phone-input"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Phone No.
                 </label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
                     <svg
-                      class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="currentColor"
@@ -137,25 +145,35 @@ function SignUp() {
                     </svg>
                   </div>
                   <input
-                    type="number"
+                    type="text"
                     id="phone-input"
-                    aria-describedby="helper-text-explanation"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="123-456-7890"
-                    required
-                    {...register("phone")}
+                    {...register("phone", {
+                      required: "Phone number is required",
+                      pattern: {
+                        value: /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/,
+                        message:
+                          "Phone number must be in the format 123-456-7890",
+                      },
+                    })}
                   />
+                  {errors.phone && (
+                    <p className="text-red-500 text-sm">
+                      {errors.phone.message}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="flex items-start">
                 <div className="flex items-center h-5">
                   <input
                     id="terms"
-                    aria-describedby="terms"
                     type="checkbox"
                     className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    required=""
+                    {...register("terms", {
+                      required: "You must accept the terms and conditions",
+                    })}
                   />
                 </div>
                 <div className="ml-3 text-sm">
@@ -173,6 +191,9 @@ function SignUp() {
                   </label>
                 </div>
               </div>
+              {errors.terms && (
+                <p className="text-red-500 text-sm">{errors.terms.message}</p>
+              )}
               <button
                 type="submit"
                 className="w-full text-white bg-blue-950 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"

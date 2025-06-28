@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 function Login() {
   const navigate = useNavigate();
   const handleLoginUser = async ({ email, password }) => {
-    axios
+   await axios
       .post("https://credentials-backend-jfce.onrender.com/v1/login", {
         method: "POST",
         headers: {
