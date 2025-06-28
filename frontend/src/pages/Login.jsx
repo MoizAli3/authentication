@@ -8,7 +8,7 @@ function Login() {
   const navigate = useNavigate();
   const handleLoginUser = async ({ email, password }) => {
     axios
-      .post("http://localhost:3000/v1/login", {
+      .post("https://credentials-backend-jfce.onrender.com/v1/login", {
         email,
         password,
       })

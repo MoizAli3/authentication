@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 function SignUp() {
   const handleCreateUser = async ({ username, email, password, phone }) => {
     axios
-      .post("http://localhost:3000/v1/signup", {
+      .post("https://credentials-backend-jfce.onrender.com/v1/signup", {
         username,
         email,
         password,
