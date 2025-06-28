@@ -15,7 +15,8 @@ app.use(
   cors({
     origin: function (origin, callback) {
       if (
-        !origin || "https://frontend-authentication-ce9p.onrender.com".includes(origin)
+        !origin ||
+        origin === "https://frontend-authentication-ce9p.onrender.com"
       ) {
         callback(null, true);
       } else {
@@ -25,6 +26,7 @@ app.use(
     credentials: true,
   })
 );
+
 
 app.use(express.json());
 app.use("/v1", router);
