@@ -10,11 +10,7 @@ const port = process.env.PORT || 3000;
 connectMongoDb(process.env.DATABASE_URI);
 
 app.use(
-  cors({
-    origin: "https://frontend-authentication-ce9p.onrender.com",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Include allowed methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Include allowed headers
-  })
+  cors({origin: "https://frontend-authentication-ce9p.onrender.com"})
 );
 app.use(express.json());
 app.use("/v1", router);
