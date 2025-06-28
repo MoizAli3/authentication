@@ -7,35 +7,30 @@ import Swal from "sweetalert2";
 function Login() {
   const navigate = useNavigate();
   const handleLoginUser = async ({ email, password }) => {
-   await axios
-      .post("https://credentials-backend-jfce.onrender.com/v1/login", {
-        method: "POST",
+    await axios.post(
+      "https://credentials-backend-jfce.onrender.com/v1/login",
+      { email, password },
+      {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      })
-      .then(function (response) {
-        console.log(response);
-        Swal.fire({
-          title: "Congratulations!",
-          text: "You Successfully Login a Account!",
-          icon: "success",
-        });
-        navigate("/home");
-      })
-      .catch(function (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-          footer: '<a href="#">Why do I have this issue?</a>',
-        });
-        console.log(error);
+        withCredentials: true,
+      }
+    );
+    navigate("/home");
+    Swal.fire({
+      title: "Congratulations!",
+      text: "You Successfully Login a Account!",
+      icon: "success",
+    }).catch(function (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        footer: '<a href="#">Why do I have this issue?</a>',
       });
+      console.log(error);
+    });
   };
 
   const { register, handleSubmit } = useForm();
