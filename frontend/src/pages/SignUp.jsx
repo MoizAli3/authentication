@@ -151,11 +151,6 @@ function SignUp() {
                     placeholder="123-456-7890"
                     {...register("phone", {
                       required: "Phone number is required",
-                      pattern: {
-                        value: /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/,
-                        message:
-                          "Phone number must be in the format 123-456-7890",
-                      },
                     })}
                   />
                   {errors.phone && (
