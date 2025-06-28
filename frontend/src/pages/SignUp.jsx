@@ -6,13 +6,12 @@ import Swal from "sweetalert2";
 
 function SignUp() {
   const handleCreateUser = async ({ username, email, password, phone }) => {
-    axios
+   await axios
       .post("https://credentials-backend-jfce.onrender.com/v1/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-
         withCredentials: true,
 
         body: JSON.stringify({
