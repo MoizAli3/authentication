@@ -9,8 +9,14 @@ function Login() {
   const handleLoginUser = async ({ email, password }) => {
     axios
       .post("https://credentials-backend-jfce.onrender.com/v1/login", {
-        email,
-        password,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       })
       .then(function (response) {
         console.log(response);

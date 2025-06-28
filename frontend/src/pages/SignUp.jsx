@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 
@@ -8,10 +8,16 @@ function SignUp() {
   const handleCreateUser = async ({ username, email, password, phone }) => {
     axios
       .post("https://credentials-backend-jfce.onrender.com/v1/signup", {
-        username,
-        email,
-        password,
-        phone,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          phone,
+        }),
       })
       .then(function (response) {
         Swal.fire({
@@ -31,7 +37,7 @@ function SignUp() {
         console.log(error);
       });
   };
-  
+
   const {
     register,
     handleSubmit,
@@ -51,7 +57,7 @@ function SignUp() {
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold text-center leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white">
-             Sign Up
+              Sign Up
             </h1>
             <form
               className="space-y-4 md:space-y-2.5"
