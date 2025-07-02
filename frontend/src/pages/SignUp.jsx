@@ -12,9 +12,12 @@ function SignUp() {
   } = useForm();
 
   const handleCreateUser = async ({ username, email, password, phone }) => {
+    const baseURL = "https://credentials-backend-jfce.onrender.com/";
+    const devlopURL = "http://localhost:3000/";
     try {
+      console.log("username ->", username);
       const response = await axios.post(
-        "https://credentials-backend-jfce.onrender.com/v1/signup",
+        `${devlopURL}v1/signup`,
         { username, email, password, phone },
         {
           headers: {
@@ -42,7 +45,11 @@ function SignUp() {
     }
   };
 
-  const onSubmit = (data) => handleCreateUser(data);
+  const onSubmit = (data) => {
+    console.log(data)
+    return handleCreateUser(data);
+  } ;
+ 
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">

@@ -3,6 +3,7 @@ import { User } from "../../models/user.js";
 import bcrypt from "bcrypt";
 import transporter from "../../helpers/index.js";
 import "dotenv/config";
+import jwt from "jsonwebtoken";
     
 
 const userValidationSchema = joi.object({
@@ -42,6 +43,14 @@ export const handleCreateUser = async (req, res) => {
         Welcome Your account is created successfully`,
       subject: "Email send testing",
     });
+
+    const token = jwt.sign(
+      { _id: createUser._id, email: createUser.email },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
+    res.cookie("token", token);
 
     return res.status(200).send({
       status: 200,

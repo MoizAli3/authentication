@@ -1,9 +1,12 @@
 import React from 'react'
+import Logout from './Logout';
 
 function Home() {
   return (
     <>
-      <p className="text-7xl font-bold text-center text-blue-500 mt-9"> Welcome to Home Page</p>
+      <Logout />
+      <p className="text-7xl font-bold text-center text-black mt-10"> Home Page</p>
+
     </>
   );
 }
