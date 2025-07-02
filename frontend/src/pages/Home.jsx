@@ -6,7 +6,6 @@ function Home() {
     <>
       <Logout />
       <p className="text-7xl font-bold text-center text-black mt-10"> Home Page</p>
-
     </>
   );
 }
