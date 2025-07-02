@@ -44,11 +44,11 @@ export const handleCreateUser = async (req, res) => {
       subject: "Email send testing",
     });
 
-    const token = jwt.sign(
-      { _id: createUser._id, email: createUser.email },
-      process.env.JWT_SECRET_KEY,
-      { expiresIn: "1h" }
-    );
+      const token = jwt.sign(
+        { _id: createUser._id, email: createUser.email },
+        process.env.JWT_SECRET_KEY,
+        { expiresIn: "1h" }
+      );
 
     res.cookie("token", token);
 
