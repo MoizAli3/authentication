@@ -17,7 +17,7 @@ function SignUp() {
     try {
       console.log("username ->", username);
       const response = await axios.post(
-        `${devlopURL}v1/signup`,
+        `${baseURL}v1/signup`,
         { username, email, password, phone },
         {
           headers: {

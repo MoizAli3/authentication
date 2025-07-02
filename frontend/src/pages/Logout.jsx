@@ -10,7 +10,7 @@ function Logout() {
 
   const handleLogoutUser = async () => {
     await axios
-      .post(`${devlopURL}v1/logout`, {
+      .post(`${baseURL}v1/logout`, {
         headers: {
           "Content-Type": "application/json",
         },

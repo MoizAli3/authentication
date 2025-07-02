@@ -12,7 +12,7 @@ function Login() {
   const handleLoginUser = async ({ email, password }) => {
     await axios
       .post(
-        `${devlopURL}v1/login`,
+        `${baseURL}v1/login`,
         { email, password },
         {
           headers: {
@@ -26,10 +26,9 @@ function Login() {
           title: "Congratulations!",
           text: "You Successfully Login a Account!",
           icon: "success",
-        })
+        });
         return navigate("/home");
-      }
-      )
+      })
       .catch(function (error) {
         Swal.fire({
           icon: "error",
