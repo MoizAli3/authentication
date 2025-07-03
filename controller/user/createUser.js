@@ -34,6 +34,9 @@ export const handleCreateUser = async (req, res) => {
       email: email,
       phone: phone,
       password: passwordHash,
+      otp: "",
+      verifytime:"",
+      accountverification:"unverified",
     });
 
     transporter.sendMail({

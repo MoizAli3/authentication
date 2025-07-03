@@ -3,10 +3,15 @@ import router from "./router/index.js";
 import connectMongoDb from "./connect.js";
 import cors from "cors";
 import "dotenv/config";
+import cookieParser from "cookie-parser";
 
 const app = express();
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 3000;
+
+
 connectMongoDb(process.env.DATABASE_URI);
 
 const allowedOrigins = process.env.CLIENT_URL;

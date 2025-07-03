@@ -1,10 +1,12 @@
 import React from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
+
 function SignUp() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -16,22 +18,26 @@ function SignUp() {
     const devlopURL = "http://localhost:3000/";
     try {
       console.log("username ->", username);
-      const response = await axios.post(
-        `${baseURL}v1/signup`,
-        { username, email, password, phone },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
-      Swal.fire({
-        title: "Congratulations!",
-        text: "You created an account!",
-        icon: "success",
-      });
-      console.log(response);
+       await axios
+         .post(
+           `${baseURL}v1/signup`,
+           { username, email, password, phone },
+           {
+             headers: {
+               "Content-Type": "application/json",
+             },
+             withCredentials: true,
+           }
+         )
+         .then(() => {
+           Swal.fire({
+             title: "Congratulations!",
+             text: "You created an account!",
+             icon: "success",
+           });
+           navigate("/login");
+         });
+     
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || "Something went wrong!";
@@ -155,7 +161,7 @@ function SignUp() {
                     type="text"
                     id="phone-input"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="123-456-7890"
+                    placeholder="+92332897522"
                     {...register("phone", {
                       required: "Phone number is required",
                     })}

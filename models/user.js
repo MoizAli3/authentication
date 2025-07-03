@@ -19,6 +19,15 @@ const UserSchema = new Schema(
       type: Schema.Types.Number,
       required: true,
     },
+    otp: {
+      type: Schema.Types.String,
+    },
+    verifytime: {
+      type: Schema.Types.String,
+    },
+    accountverification: {
+      type: Schema.Types.String,
+    },
   },
   { timestamps: true }
 );
